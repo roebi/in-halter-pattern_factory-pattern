@@ -1,0 +1,111 @@
+// Gradle < 2.1
+buildscript {
+  apply from: "buildscript.gradle"
+}
+
+// Gradle >= 2.1
+plugins {
+    id "java"
+    id "idea"
+    id "eclipse"
+    // Helper for deploy to bintray
+    id "com.jfrog.bintray" version "1.1"
+    // Cobertura test coverage - A code coverage utility for Java.
+    id "net.saliman.cobertura" version "2.2.8"
+}
+
+apply from: "publishing.gradle"
+apply from: "cobertura.gradle"
+
+// apply plugin: "org.gradle.eclipse"
+
+def javaVersion = JavaVersion.VERSION_1_8
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion // defaults to sourceCompatibility
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+
+dependencies {
+  // none for runtime!
+
+  // some for test
+  testCompile "org.easytesting:fest-assert-core:2.0M10"
+  testCompile("org.easytesting:fest-assert:1.4") {
+    exclude group: "org.easytesting", module: "fest-util"
+  }
+  testCompile "org.hamcrest:hamcrest-core:1.3"
+  testCompile("junit:junit:4.12") {
+    //excluding particular transitive dependency
+    exclude group: "org.hamcrest", module: "hamcrest-core"
+  }
+  testCompile("org.hamcrest:hamcrest-library:1.3") {
+    //excluding particular transitive dependency
+    exclude group: "org.hamcrest", module: "hamcrest-core"
+  }
+  testCompile("org.spockframework:spock-core:1.0-groovy-2.3") {
+    //excluding particular transitive dependency
+    exclude group: "org.hamcrest", module: "hamcrest-core"
+    exclude group: "junit", module: "junit"
+    exclude group: "org.codehaus.groovy", module: "groovy-all"
+  }
+  // cobertura
+  cobertura "org.slf4j:slf4j-simple:1.7.12"
+}
+
+group = theGroup
+version = theVersion
+// mainClassName = group + ".app.Main"
+
+compileJava {
+  options.fork = true
+}
+
+ext.sharedManifest = manifest {
+  attributes("Implementation-Title": group + " " + rootProject.name,
+             "Implementation-Version": version)
+}
+
+jar {
+  manifest = project.manifest {
+    from sharedManifest
+  }
+}
+
+task sourceJar(type: Jar) {
+  from sourceSets.main.allJava
+  manifest = project.manifest {
+    from sharedManifest
+  }
+}
+
+javadoc {
+  title = "domain driven, reusable and immutable constant values for java programming language"
+  options {
+    links("http://docs.oracle.com/javase/8/docs/api/")
+    // links("http://www.const1.ch/lang-ja8/docs/current/javadoc/")
+  }
+}
+
+task javaDocJar(type: Jar, dependsOn: javadoc) {
+  classifier = "doc"
+  from javadoc.destinationDir
+  manifest = project.manifest {
+    from sharedManifest
+  }
+}
+
+test {
+  useJUnit {
+    // includeCategories 'org.gradle.junit.CategoryA'
+  }
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
+}
+
+artifacts {
+  archives jar, javaDocJar
+}

@@ -1,0 +1,9 @@
+// Gradle < 2.1
+buildscript { 
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+  dependencies {
+  }
+}
