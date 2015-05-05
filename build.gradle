@@ -17,6 +17,7 @@ plugins {
 apply from: "publishing.gradle"
 apply from: "cobertura.gradle"
 apply from: "jacoco.gradle"
+apply from: "sonarrunner.gradle"
 
 // apply plugin: "org.gradle.eclipse"
 
