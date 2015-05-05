@@ -11,11 +11,12 @@ plugins {
     // Helper for deploy to bintray
     id "com.jfrog.bintray" version "1.1"
     // Cobertura test coverage - A code coverage utility for Java.
-    id "net.saliman.cobertura" version "2.2.8"
+    // id "net.saliman.cobertura" version "2.2.8"
 }
 
 apply from: "publishing.gradle"
 apply from: "cobertura.gradle"
+apply from: "jacoco.gradle"
 
 // apply plugin: "org.gradle.eclipse"
 
