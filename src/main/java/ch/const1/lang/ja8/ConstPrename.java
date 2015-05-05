@@ -7,13 +7,6 @@ package ch.const1.lang.ja8;
 public final class ConstPrename {
 
   /**
-   * private constructor
-   * @since 1.0
-   */
-  private ConstPrename () {
-  }
-
-  /**
    * Prename "Ben"
    * @since 1.0
    */
@@ -42,5 +35,12 @@ public final class ConstPrename {
    * @since 1.0
    */
   public static final String C_PRENAME_MIA = "Mia";
+
+  /**
+   * private constructor
+   * @since 1.0
+   */
+  private ConstPrename () {
+  }
 
 }

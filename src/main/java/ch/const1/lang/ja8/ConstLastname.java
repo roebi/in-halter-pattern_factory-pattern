@@ -7,13 +7,6 @@ package ch.const1.lang.ja8;
 public final class ConstLastname {
 
   /**
-   * private constructor
-   * @since 1.0
-   */
-  private ConstLastname () {
-  }
-
-  /**
    * Lastname "Fischer"
    * @since 1.0
    */
@@ -42,5 +35,12 @@ public final class ConstLastname {
    * @since 1.0
    */
   public static final String C_LASTNAME_SOMMER = "Sommer";
+
+  /**
+   * private constructor
+   * @since 1.0
+   */
+  private ConstLastname () {
+  }
 
 }

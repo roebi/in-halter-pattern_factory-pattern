@@ -7,13 +7,6 @@ package ch.const1.lang.ja8;
 public final class ConstSwissPLZ {
 
   /**
-   * private constructor
-   * @since 1.0
-   */
-  private ConstSwissPLZ () {
-  }
-
-  /**
    * Swiss PLZ 1000
    * @since 1.0
    */
@@ -42,5 +35,12 @@ public final class ConstSwissPLZ {
    * @since 1.0
    */
   public static final int C_SWISSPLZ_9000 = 9000;
+
+  /**
+   * private constructor
+   * @since 1.0
+   */
+  private ConstSwissPLZ () {
+  }
 
 }

@@ -7,13 +7,6 @@ package ch.const1.lang.ja8;
 public final class ConstStreet {
 
   /**
-   * private constructor
-   * @since 1.0
-   */
-  private ConstStreet () {
-  }
-
-  /**
    * Street "Bahnhofstrasse"
    * @since 1.0
    */
@@ -42,5 +35,12 @@ public final class ConstStreet {
    * @since 1.0
    */
   public static final String C_STREET_ZEDERSTRASSE = "Zederstrasse";
+
+  /**
+   * private constructor
+   * @since 1.0
+   */
+  private ConstStreet () {
+  }
 
 }
