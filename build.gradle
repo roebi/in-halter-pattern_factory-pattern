@@ -1,6 +1,14 @@
 // Gradle < 2.1
+import org.reflections.Reflections
+
 buildscript {
   apply from: "buildscript.gradle"
+}
+
+buildscript { 
+  dependencies {
+    classpath "org.reflections:reflections:${reflectionsVersion}"
+  }
 }
 
 // Gradle >= 2.1
@@ -31,7 +39,9 @@ repositories {
 }
 
 dependencies {
-  // none for runtime!
+  // runtime
+  compile "org.apache.commons:commons-lang3:${apacheCommonsLang3Version}"
+  compile "org.reflections:reflections:${reflectionsVersion}"
 
   // some for test
   testCompile "org.easytesting:fest-assert-core:${festAssertCoreVersion}"
@@ -66,8 +76,24 @@ compileJava {
 }
 
 ext.sharedManifest = manifest {
+  Reflections reflections = new Reflections("ch.const1.factory.impl")
+/*
+  Set<Class<? extends Command>> commandClasses = reflections.getSubTypesOf(ch.const1.factory.api.Command.class)
+  Map<String, String> commandClassesNames = new HashMap<String, String>()
+  System.out.println("All commandClasses")
+  // for (Class<? extends Command> commandClass : commandClasses) {
+  commandClasses.each { commandClass ->
+    String fullClassName = commandClass.getName()
+    int lastPointindex = fullClassName.lastIndexOf(".")
+    String className = fullClassName.substring(lastPointindex  + 1)
+    commandClassesNames.put(className, fullClassName)
+    System.out.println("- commandClass: " + className + ": " + fullClassName)
+  }
+*/
+
   attributes("Implementation-Title": group + " " + rootProject.name,
-             "Implementation-Version": version)
+             "Implementation-Version": version,
+             // "Class-Path": configurations.compile.collect { it.getName() }.join(' '))
 }
 
 jar {

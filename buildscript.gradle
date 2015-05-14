@@ -4,6 +4,4 @@ buildscript {
     mavenCentral()
     jcenter()
   }
-  dependencies {
-  }
 }

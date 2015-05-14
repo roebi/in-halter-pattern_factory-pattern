@@ -31,7 +31,7 @@ bintray {
   // In that case, there's no need to configure the other package properties (like userOrg, desc, etc).
   pkg {
     repo = "ch-const1"
-    name = "lang-ja8"
+    name = "factory"
     desc = "domain driven, reusable and immutable constant values for java programming language"
     websiteUrl = "https://github.com/roebi/ch-const1_lang-ja8"
     issueTrackerUrl = "https://github.com/roebi/ch-const1_lang-ja8/issues"
