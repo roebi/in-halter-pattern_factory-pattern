@@ -1,15 +1,18 @@
 // Gradle < 2.1
-import org.reflections.Reflections
+// import org.reflections.Reflections
 
 buildscript {
   apply from: "buildscript.gradle"
 }
 
+/*
 buildscript { 
   dependencies {
     classpath "org.reflections:reflections:${reflectionsVersion}"
+    classpath files('build/libs/in.halter.factory-pattern-1.0.jar')
   }
 }
+*/
 
 // Gradle >= 2.1
 plugins {
@@ -27,8 +30,6 @@ apply from: "cobertura.gradle"
 apply from: "jacoco.gradle"
 apply from: "sonarrunner.gradle"
 
-// apply plugin: "org.gradle.eclipse"
-
 def javaVersion = JavaVersion.VERSION_1_8
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion // defaults to sourceCompatibility
@@ -42,6 +43,7 @@ dependencies {
   // runtime
   compile "org.apache.commons:commons-lang3:${apacheCommonsLang3Version}"
   compile "org.reflections:reflections:${reflectionsVersion}"
+  compile "org.apache.logging.log4j:log4j-core:${log4jVersion}"
 
   // some for test
   testCompile "org.easytesting:fest-assert-core:${festAssertCoreVersion}"
@@ -76,24 +78,38 @@ compileJava {
 }
 
 ext.sharedManifest = manifest {
-  Reflections reflections = new Reflections("ch.const1.factory.impl")
 /*
-  Set<Class<? extends Command>> commandClasses = reflections.getSubTypesOf(ch.const1.factory.api.Command.class)
+  // Try to generate a Interaction List - chicken egg Problem - does not work here
+  // Its in wrong Place, because i need the Command Class. It is in the Jar that i build.
+  Reflections reflections = new Reflections("in.halter.pattern.factorypattern.impl.command")
+
+  String commandClassName = "in.halter.pattern.factorypattern.api.Command"
+  Class commandClass = null
+  try {
+    commandClass = reflections.getClass().getClassLoader().loadClass(commandClassName);
+  } catch (ClassNotFoundException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+  }
+
+  // Set<Class<? extends Command>>
+  Set commandClasses = reflections.getSubTypesOf(commandClass)
   Map<String, String> commandClassesNames = new HashMap<String, String>()
-  System.out.println("All commandClasses")
-  // for (Class<? extends Command> commandClass : commandClasses) {
-  commandClasses.each { commandClass ->
-    String fullClassName = commandClass.getName()
+  logger.quiet("All commandClasses")
+  commandClasses.each { aCommandClass ->
+    String fullClassName = aCommandClass.getName()
     int lastPointindex = fullClassName.lastIndexOf(".")
     String className = fullClassName.substring(lastPointindex  + 1)
     commandClassesNames.put(className, fullClassName)
-    System.out.println("- commandClass: " + className + ": " + fullClassName)
+    logger.quiet("- aCommandClass: " + className + ": " + fullClassName)
   }
 */
-
   attributes("Implementation-Title": group + " " + rootProject.name,
-             "Implementation-Version": version) // ,
+             "Implementation-Version": version,
              // "Class-Path": configurations.compile.collect { it.getName() }.join(' '))
+             "Built-By": System.getProperty('user.name'),
+             "Built-Date": new Date(),
+             "Built-JDK": System.getProperty('java.version') )
 }
 
 jar {
@@ -102,24 +118,53 @@ jar {
   }
 }
 
-task sourceJar(type: Jar) {
+task apiJar(type: Jar, dependsOn: jar) {
+  appendix = "api"
+  from files(sourceSets.main.output.classesDir) 
+  exclude('in/halter/pattern/factorypattern/impl/**') 
+  manifest = project.manifest {
+    from sharedManifest
+  }
+}
+
+task sourceJar(type: Jar, dependsOn: jar) {
   from sourceSets.main.allJava
   manifest = project.manifest {
     from sharedManifest
   }
 }
 
+task apisourceJar(type: Jar, dependsOn: jar) {
+  appendix = "api"
+  classifier = "sources"
+  from sourceSets.main.allJava
+  exclude('in/halter/pattern/factorypattern/impl/**') 
+  manifest = project.manifest {
+    from sharedManifest
+  }
+}
+
 javadoc {
-  title = "domain driven, reusable and immutable constant values for java programming language"
+  title = "Factory Pattern for Commands and its CommandContext and CommandFactory for java programming language."
   options {
     links("http://docs.oracle.com/javase/8/docs/api/")
-    // links("http://www.const1.ch/lang-ja8/docs/current/javadoc/")
+    // links("http://www.halter.in/factorypattern/docs/current/javadoc/")
   }
 }
 
 task javaDocJar(type: Jar, dependsOn: javadoc) {
   classifier = "doc"
   from javadoc.destinationDir
+  manifest = project.manifest {
+    from sharedManifest
+  }
+}
+
+task apijavaDocJar(type: Jar, dependsOn: javadoc) {
+  appendix = "api"
+  classifier = "doc"
+  from javadoc.destinationDir
+  exclude('in/halter/pattern/factorypattern/impl/**') 
   manifest = project.manifest {
     from sharedManifest
   }
@@ -135,5 +180,5 @@ test {
 }
 
 artifacts {
-  archives jar, javaDocJar
+  archives jar, sourceJar, javaDocJar, apiJar, apisourceJar, apijavaDocJar
 }

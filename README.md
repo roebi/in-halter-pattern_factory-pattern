@@ -1,6 +1,6 @@
-# CH CONST1 - Code Const
+# IN HALTER PATTERN FACTORYPATTERN - Command and its CommandContext and CommandFactory
 
-## Project: domain driven, reusable and immutable constant values for java programming language
+## Project: Proof of Concept for Command and its CommandContext and CommandFactory with Convention over Configuration Variants 
 
 ## Use it - define in your build.gradle file
 
@@ -8,81 +8,34 @@
 
 `  // use at runtime`
 
-`compile "ch.const1:ch.const1-lang-ja8:1.0"`
+`compile "in.halter.pattern:in.halter.factory-pattern-api:1.0"`
 
-`  // use in tests`
-
-`  testCompile "ch.const1:ch.const1-lang-ja8:1.0"`
+`compile "in.halter.pattern:in.halter.factory-pattern:1.0"`
 
 `}`
 
-## When you write Unittests with many Data Values
+## When you have a serial Sequence of Commands, each executed one after another ...	
+ 
+you can use this Proof of Concept as a starting Point.
 
-you write many constant values
+You can choose about Different Implementations of the CommandFactories, or write your own.
 
-- Strings (with a Domain behind)
-- Numbers (with a Domain behind)
+The CommandContext is ready to handle multiple Properties Groups, used by the CommandFactory or the CommandContext it self.
 
-for
+## Proof of Concept
 
-- Setting
-- Searching
-- Validating
+Simple Challenge:
 
-direct in your code.
+- Define a surroundings for Commands
+- Build Command for Command to build a Command Library for a defined Businesscase
+- Define your Conventions and minimize your Configuration
 
-## This is a approach to define reusable and immutable constant values as simple as possible.
+This Implementation is a small playground to do some Verification in Java Implementation without all the other Details Things in the Businesscase. 
 
-First start small
+## Convention
 
-- with immutable, domain driven values.
+A **Command Id**
 
-Later on
-
-- with generated constant values from your Domain specific Database
-- with generated constant values from your Domain specific REST API
-- with search in your Domain specific test (Unittest, Integrationtest, Systemtest) code base for constant values.
-- with search in your Domain specific productive code base for constant values.
-
-combinated to
-
-- Methodes that gives you real reusable domain driven constant values that you need.
-
-gives you
-
-- better test values
-- better Integration in your IDE, like insert a method call.
-
-#### Think about Test Data Combination - Data Driven Testing
-
-What do you think? How many Data Combinations for example a Person can you define with
-
-- 5 Prenames
-- 5 Lastnames
-- 5 Streets
-- 5 Places
-
-I think: Enough for Unit Tests, one key ist to have my domain specific values
-
-#### Naming convention
-
-Each **value identifier**
-
-- starts with a `C_` followed by a `DOMAIN` followed by a `_` followed by a identifier.
-- **Example:** `C_PRENAME_BEN` (DOMAIN is PRENAME)
-
-Each **class identifier**
-
-- starts with a `Const` followed by a `DOMAIN`.
-- **Example:** `ConstPrename` (DOMAIN is Prename)
-- is `public static final` (immutable)
-- is in a `public final class`
-
-Each **constant value**
-
-- is a primitive type if possible (performance)
-
-Each **class**
-
-- is a `public final class`
-- has a `private` constructor (no need to instantiate)
+- is a string
+- starts with a `CMD` followed by a `Number` followed by a `Letter` for the Implementation Language if you have more then one (i.E. Scala).
+- **Example:** `CMD1234J` (Letter is J for Java)

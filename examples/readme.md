@@ -1,21 +1,23 @@
-# CH CONST1 - Code Const - Examples
+# IN HALTER PATTERN - Factorypattern - Examples
 
-## Project: domain driven, reusable and immutable constant values for java programming language
+## Weekend Project: Command Factory Refactoring from Declaration in Source to Declaration in Configuration File for java programming language - Java SE
 
 Unittests are always a good Guide for Examples.
 
 Look at
 
-`ch.const1.lang.ja8.ConstPrenameTest.java`
+`in.halter.pattern.factorypattern.examples`
 
 in the
 
 `src/test` Folder
 
-for some Hamcrest JUnit Tests.
+- for a Client that use a Command Sequence of Commands and its CommandContext and CommandFactory.
+- for some Hamcrest JUnit Tests.
 
 ####TODO
 
 - Add some FEST tests.
 - Add some spock Testspezifications.
+- Add minor use of javax.naming Classes - JNDI (SPI and API)
  
