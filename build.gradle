@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
   // runtime
-  compile "org.apache.commons:commons-lang3:${apacheCommonsLang3Version}"
+  // compile "org.apache.commons:commons-lang3:${apacheCommonsLang3Version}"
   compile "org.reflections:reflections:${reflectionsVersion}"
   compile "org.apache.logging.log4j:log4j-core:${log4jVersion}"
 
@@ -68,10 +68,6 @@ dependencies {
   // cobertura
   cobertura "org.slf4j:slf4j-simple:${coberturaSlf4jSimpleVersion}"
 }
-
-group = theGroup
-version = theVersion
-// mainClassName = group + ".app.Main"
 
 compileJava {
   options.fork = true
@@ -104,8 +100,9 @@ ext.sharedManifest = manifest {
     logger.quiet("- aCommandClass: " + className + ": " + fullClassName)
   }
 */
-  attributes("Implementation-Title": group + " " + rootProject.name,
-             "Implementation-Version": version,
+  attributes("Implementation-Title": theDescription,
+             "API-Version": theAPIVersion,
+             "Implementation-Version": theImplVersion,
              // "Class-Path": configurations.compile.collect { it.getName() }.join(' '))
              "Built-By": System.getProperty('user.name'),
              "Built-Date": new Date(),
@@ -113,55 +110,62 @@ ext.sharedManifest = manifest {
 }
 
 jar {
+  appendix = theImplAppendix
+  exclude('in/halter/pattern/factorypattern/api/**')
   manifest = project.manifest {
     from sharedManifest
   }
 }
 
 task apiJar(type: Jar, dependsOn: jar) {
-  appendix = "api"
-  from files(sourceSets.main.output.classesDir) 
-  exclude('in/halter/pattern/factorypattern/impl/**') 
+  appendix = theApiAppendix
+  from files(sourceSets.main.output.classesDir)
+  exclude('in/halter/pattern/factorypattern/impl/**')
   manifest = project.manifest {
     from sharedManifest
   }
 }
 
 task sourceJar(type: Jar, dependsOn: jar) {
+  appendix = theImplAppendix
   from sourceSets.main.allJava
+  exclude('in/halter/pattern/factorypattern/api/**')
   manifest = project.manifest {
     from sharedManifest
   }
 }
 
 task apisourceJar(type: Jar, dependsOn: jar) {
-  appendix = "api"
+  appendix = theApiAppendix
   classifier = "sources"
   from sourceSets.main.allJava
-  exclude('in/halter/pattern/factorypattern/impl/**') 
+  exclude('in/halter/pattern/factorypattern/impl/**')
   manifest = project.manifest {
     from sharedManifest
   }
 }
 
 javadoc {
-  title = "Factory Pattern for Commands and its CommandContext and CommandFactory for java programming language."
+  title = theDescription
   options {
     links("http://docs.oracle.com/javase/8/docs/api/")
-    // links("http://www.halter.in/factorypattern/docs/current/javadoc/")
+    // links("http://www.halter.in/factorypattern-api/docs/current/javadoc/")
+    // links("http://www.halter.in/factorypattern-impl/docs/current/javadoc/")
   }
 }
 
 task javaDocJar(type: Jar, dependsOn: javadoc) {
+  appendix = theImplAppendix
   classifier = "doc"
   from javadoc.destinationDir
+  exclude('in/halter/pattern/factorypattern/api/**') 
   manifest = project.manifest {
     from sharedManifest
   }
 }
 
 task apijavaDocJar(type: Jar, dependsOn: javadoc) {
-  appendix = "api"
+  appendix = theApiAppendix
   classifier = "doc"
   from javadoc.destinationDir
   exclude('in/halter/pattern/factorypattern/impl/**') 

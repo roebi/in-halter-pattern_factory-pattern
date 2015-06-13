@@ -4,7 +4,29 @@ apply plugin: "com.jfrog.bintray"
 publishing {
   publications {
     // correlates to bintray.publications value
-    mavenJava(MavenPublication) {
+    mavenJavaApi(MavenPublication) {
+      logger.info("apiJar.appendix: " + apiJar.appendix)
+      groupId = theBaseGroup + "-" + apiJar.appendix
+      artifactId = theBaseName + "-" + apiJar.appendix
+      version = theAPIVersion
+
+      artifact apiJar
+
+      artifact apijavaDocJar {
+        classifier "doc"
+      }
+
+      artifact apisourceJar {
+        classifier "sources"
+      }
+    }
+    // correlates to bintray.publications value
+    mavenJavaImpl(MavenPublication) {
+      logger.info("jar.appendix: " + jar.appendix)
+      groupId = theBaseGroup + "-" + jar.appendix
+      artifactId = theBaseName + "-" + jar.appendix
+      version = theImplVersion
+
       from components.java
 
       artifact javaDocJar {
@@ -23,21 +45,21 @@ bintray {
   key = bintrayApiKey
   // configurations = [ "archives" ]
   // correlates to publishing.publications value
-  publications = ["mavenJava"] // when uploading maven based publication files
+  publications = ["mavenJavaApi", "mavenJavaImpl"] // when uploading maven based publication files
   dryRun = true // true if run this as dry-run, without deploying
   publish = true // true if version should be auto published after an upload
   // Package configuration.
   // The plugin will use the repo and name properties to check if the package already exists.
   // In that case, there's no need to configure the other package properties (like userOrg, desc, etc).
   pkg {
-    repo = "ch-const1"
-    name = "factory"
-    desc = "domain driven, reusable and immutable constant values for java programming language"
-    websiteUrl = "https://github.com/roebi/ch-const1_lang-ja8"
-    issueTrackerUrl = "https://github.com/roebi/ch-const1_lang-ja8/issues"
-    vcsUrl = "https://github.com/roebi/ch-const1_lang-ja8.git"
+    repo = theBaseGroup
+    name = theBaseName
+    desc = theDescription
+    websiteUrl = "https://github.com/roebi/in-halter-pattern_factory-pattern"
+    issueTrackerUrl = "https://github.com/roebi/in-halter-pattern_factory-pattern/issues"
+    vcsUrl = "https://github.com/roebi/in-halter-pattern_factory-pattern.git"
     licenses = ["Apache-2.0"]
-    labels = ["const", "java", "immutable", "domain driven value", "const1"]
+    labels = ["java", "factory", "pattern", "properties", "ConventionOverConfiguration", "command"]
     publicDownloadNumbers = true
     // Optional version descriptor
     version {
