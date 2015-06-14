@@ -8,11 +8,18 @@
 
 `  // use at runtime`
 
-`compile "in.halter.pattern:in.halter.factory-pattern-api:1.0"`
+`  // API`
 
-`compile "in.halter.pattern:in.halter.factory-pattern:1.0"`
+`compile "in.halter.pattern-api:in.halter.factory-pattern-api:1.0"`
+
+`  // Implementation`
+
+`compile "in.halter.pattern-impl:in.halter.factory-pattern-impl:1.0"`
 
 `}`
+
+## Build Status
+[![Build Status](https://drone.io/github.com/roebi/in-halter-pattern_factory-pattern/status.png)](https://drone.io/github.com/roebi/in-halter-pattern_factory-pattern/latest)
 
 ## When you have a serial Sequence of Commands, each executed one after another ...	
  
