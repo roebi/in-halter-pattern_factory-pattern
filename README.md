@@ -18,6 +18,9 @@
 
 `}`
 
+## Download
+ [ ![Download](https://api.bintray.com/packages/roebi/maven/in.halter.factory-pattern/images/download.svg) ](https://bintray.com/roebi/maven/in.halter.factory-pattern/_latestVersion)
+
 ## Build Status
 [![Build Status](https://drone.io/github.com/roebi/in-halter-pattern_factory-pattern/status.png)](https://drone.io/github.com/roebi/in-halter-pattern_factory-pattern/latest)
 

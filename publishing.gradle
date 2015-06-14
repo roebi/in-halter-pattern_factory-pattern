@@ -52,7 +52,7 @@ bintray {
   // The plugin will use the repo and name properties to check if the package already exists.
   // In that case, there's no need to configure the other package properties (like userOrg, desc, etc).
   pkg {
-    repo = theBaseGroup
+    repo = "maven" // theBaseGroup
     name = theBaseName
     desc = theDescription
     websiteUrl = "https://github.com/roebi/in-halter-pattern_factory-pattern"
