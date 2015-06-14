@@ -46,7 +46,7 @@ bintray {
   // configurations = [ "archives" ]
   // correlates to publishing.publications value
   publications = ["mavenJavaApi", "mavenJavaImpl"] // when uploading maven based publication files
-  dryRun = true // true if run this as dry-run, without deploying
+  dryRun = false // true if run this as dry-run, without deploying
   publish = true // true if version should be auto published after an upload
   // Package configuration.
   // The plugin will use the repo and name properties to check if the package already exists.
