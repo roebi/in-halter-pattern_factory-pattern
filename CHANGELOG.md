@@ -35,10 +35,15 @@ Package `in.halter.patterns.factorypattern.impl.command.java`
 
 ### Deployed to bintray maven repository
 
-- url : `http://dl.bintray.com/content/roebi/halter/factorypattern`
-- group : `in.halter.patterns.factorypattern`
-- package : `factorypattern`
-- version : `1.0`
-- api Classes in own jar separated
+- url : `http://dl.bintray.com/roebi/maven/`
+- api Classes and impl Classes in own jars separated
+
+- group 4 api : `in.halter.pattern-api`
+- package 4 api : `in.halter.factory-pattern-api`
+- version 4 api : `1.0`
+
+- group 4 impl : `in.halter.pattern-impl`
+- package 4 impl : `in.halter.factory-pattern-impl`
+- version 4 impl: `1.0`
 
 ### Available on bintray jcenter
